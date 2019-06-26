@@ -33,6 +33,19 @@ class Solution(object):
         # clean up tail; tail will always end in 0
         res.append(0)
         return res
+
+    def nextLargerNodesStack(self, head: ListNode) -> List[int]:
+        res, stack, idx = [], [], 0
+        while head:
+            while stack and stack[-1][0] < head.val:
+                _, i = stack.pop()
+                res[i] = head.val
+            
+            res.append(0)
+            stack.append((head.val, idx))
+            idx += 1
+            head = head.next
+        return res
         
 def stringToListNode(input):
     # Generate list from the input
@@ -52,3 +65,6 @@ sol = Solution()
 head = stringToListNode('[1,7,5,1,9,2,5,1]')
 
 print(sol.nextLargerNodes(head))
+
+
+# stack[-1][0] - this (-) pulls from right, and stack 
