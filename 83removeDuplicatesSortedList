@@ -1,0 +1,28 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+
+// note for this solution, no need for 2 pointers - just one bc loop invariant
+class Solution {
+    public ListNode deleteDuplicates(ListNode head) {
+        if (head == null || head.next == null) return head;
+        ListNode ln1 = head;
+        
+        while (ln1 != null && ln1.next != null) {
+            if (ln1.val == ln1.next.val) { // found dupe
+                ln1.next = ln1.next.next;
+            } else { // increment pointer
+                ln1 = ln1.next;
+            }
+        }
+        
+        return head;
+    }
+}
