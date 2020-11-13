@@ -1,0 +1,39 @@
+/**
+ * @param {number[]} target
+ * @param {number[]} arr
+ * @return {boolean}
+ */
+var canBeEqual = function(target, arr) {
+  let aa = target.sort((a,b) => a - b)
+  let bb = arr.sort((a,b) => a - b)
+
+  return JSON.stringify(aa) == JSON.stringify(bb)
+};
+
+function solutionTwo(array_a, array_b) {
+  // Write your code here
+  let temp_b = array_b.slice() // copy by value
+  let i = 0
+
+  while (i < array_a.length) {
+    // pop front of other array
+    let a = array_a[i]
+    let b = temp_b[i]
+    if (a == b) {
+      // do nothing
+      i++
+    } else {
+      let j = i
+      while (j < temp_b.length) {
+        if (a == temp_b[j]) {
+          // concat previous vals to new reversed vals
+          temp_b = temp_b.slice(0, j).concat(temp_b.slice(j, temp_b.length).reverse())
+          break
+        } else {
+          j++
+        }
+      }
+    }
+  }
+  return JSON.stringify(array_a) == JSON.stringify(temp_b)
+}
