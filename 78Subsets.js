@@ -6,7 +6,7 @@
  */
 var backtrack = (start, curr, nums, resultSet, k, n) => {
     // 1. finish condition, i.e. if list is full
-    if (curr.length == k) resultSet.push(curr)
+    if (curr.length == k) resultSet.push(curr.slice())
 
     // 2. fill (do work)
     for (let i = start; i < nums.length; i++) {
