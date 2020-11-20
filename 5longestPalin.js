@@ -6,13 +6,12 @@
  * returns size of pal
  */
 const expandFromMiddle = (s, left, right) => {
-  if (s == null || left > right) return 0
-  while (left >= 0 && right < s.length && s.charAt(left) == s.charAt(right)) {
-    left--
-    right++
+  while (left >= 0 && right < s.length && s[left] === s[right]) {
+    left -= 1
+    right += 1
   }
-
-  return right - left - 1
+  // slice the qualified substring from the second last iteration
+  return s.slice(left + 1, right)
 }
 
 /**
@@ -21,23 +20,21 @@ const expandFromMiddle = (s, left, right) => {
  */
 const longestPalindrome = (s) => {
   if (s == null || s.length == 0) return ''
-
-  let start = 0,
-    end = 0
+  let longest =''
 
   for (let i = 0; i < s.length; i++) {
     // handle 2 cases; one odd and one even
-    let len1 = expandFromMiddle(s, i, i) // use for "racecar"
-    let len2 = expandFromMiddle(s, i, i + 1) // use for "abba"
+    let current1 = expandFromMiddle(s, i, i) // use for "racecar"
+    let current2 = expandFromMiddle(s, i, i + 1) // use for "abba"
     // keep track of lengths
-    let len = Math.max(len1, len2)
+    let len = Math.max(current1.length, current2.length)
     // found a new max!
-    if (len > end - start) {
-      start = (i - ((len - 1) / 2))
-      end = (i + len / 2)
+    const longerPalindrome =
+      current1.length > current2.length ? current1 : current2;
+    if (longerPalindrome.length > longest.length) {
+      longest = longerPalindrome;
     }
-
   }
 
-  return s.substring(start, end + 1)
+  return longest
 }
